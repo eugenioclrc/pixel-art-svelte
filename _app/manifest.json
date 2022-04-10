@@ -1,10 +1,10 @@
 {
   ".svelte-kit/runtime/client/start.js": {
-    "file": "start-1969406c.js",
+    "file": "start-7d214256.js",
     "src": ".svelte-kit/runtime/client/start.js",
     "isEntry": true,
     "imports": [
-      "_index-e10eb6d9.js"
+      "_index-a5ffc154.js"
     ],
     "dynamicImports": [
       "src/routes/__layout.svelte",
@@ -13,42 +13,42 @@
     ]
   },
   "src/routes/__layout.svelte": {
-    "file": "pages/__layout.svelte-82373f16.js",
+    "file": "pages/__layout.svelte-b4890469.js",
     "src": "src/routes/__layout.svelte",
     "isEntry": true,
     "isDynamicEntry": true,
     "imports": [
-      "_index-e10eb6d9.js"
+      "_index-a5ffc154.js"
     ],
     "css": [
-      "assets/pages/__layout.svelte-ac0fce3e.css"
+      "assets/pages/__layout.svelte-1a3c75d9.css"
     ],
     "assets": [
       "assets/minecraft-cf9f7bc7.woff"
     ]
   },
   ".svelte-kit/runtime/components/error.svelte": {
-    "file": "error.svelte-00c5caba.js",
+    "file": "error.svelte-a3256a83.js",
     "src": ".svelte-kit/runtime/components/error.svelte",
     "isEntry": true,
     "isDynamicEntry": true,
     "imports": [
-      "_index-e10eb6d9.js"
+      "_index-a5ffc154.js"
     ]
   },
   "src/routes/index.svelte": {
-    "file": "pages/index.svelte-40365d1f.js",
+    "file": "pages/index.svelte-aed01dc8.js",
     "src": "src/routes/index.svelte",
     "isEntry": true,
     "isDynamicEntry": true,
     "imports": [
-      "_index-e10eb6d9.js"
+      "_index-a5ffc154.js"
     ],
     "css": [
       "assets/pages/index.svelte-d9e1812a.css"
     ]
   },
-  "_index-e10eb6d9.js": {
-    "file": "chunks/index-e10eb6d9.js"
+  "_index-a5ffc154.js": {
+    "file": "chunks/index-a5ffc154.js"
   }
 }
