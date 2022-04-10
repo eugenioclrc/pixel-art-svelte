@@ -1,7 +1,11 @@
+<script context="module">
+  export const prerender = true;
+</script>
 <script lang="ts">
 	let cells = {}
 
 	function paint(cellId) {
+		console.log(cellId);
 		cells[cellId] = [255,0,11];
 		cells = {...cells};
 	}
