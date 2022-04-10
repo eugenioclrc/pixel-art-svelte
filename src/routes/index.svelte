@@ -1,9 +1,11 @@
-<script context="module" lang="ts">
-	export const prerender = true;
-</script>
-
 <script lang="ts">
-	import Counter from '$lib/Counter.svelte';
+	let cells = {}
+
+	function paint(cellId) {
+		cells[cellId] = [255,0,11];
+		cells = {...cells};
+	}
+
 </script>
 
 <svelte:head>
@@ -11,25 +13,31 @@
 </svelte:head>
 
 <section>
-	<h1>
-		<div class="welcome">
-			<picture>
-				<source srcset="svelte-welcome.webp" type="image/webp" />
-				<img src="svelte-welcome.png" alt="Welcome" />
-			</picture>
-		</div>
+<div class="w-full bg-slate-400 pixel-art-container">
+{#each Array(20) as _, i}
+    {#each Array(20) as _, j}
+			{@const cellId = `${i}-${j}`}
+			{@const cell = cells[cellId]}
+  		<div class="block bg-slate-500"
+			style="background: rgb({cell ? `${cell[0]}, ${cell[1]}, ${cell[2]}` : '100,116,139'})"
+		 on:click={() => { paint(cellId) }}></div>  
+		{/each}
+{/each}
+	
+</div>
 
-		to your new<br />SvelteKit app
-	</h1>
-
-	<h2>
-		try editing <strong>src/routes/index.svelte</strong>
-	</h2>
-
-	<Counter />
 </section>
 
 <style>
+	.pixel-art-container {
+		width: 400px;
+		height: 400px;
+		display: grid;
+		grid-template-columns: repeat(20, 1fr);
+		grid-template-rows: repeat(20, 1fr);
+		grid-column-gap:1px;
+		grid-row-gap: 1px;
+	}
 	section {
 		display: flex;
 		flex-direction: column;
