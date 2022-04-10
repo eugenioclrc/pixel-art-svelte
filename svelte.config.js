@@ -22,6 +22,9 @@ const config = {
 	],
 
 	kit: {
+		prerender: {
+			default: true,
+		},
 		adapter: adapter({
 			pages: "build",
       assets: "build",
@@ -29,7 +32,7 @@ const config = {
     }),
     paths: {
       // YOUR github repository name
-      base: "/pixel-art-svelte",
+    //  base: "/pixel-art-svelte",
     }
 	}
 };
