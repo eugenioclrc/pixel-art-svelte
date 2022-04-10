@@ -29,13 +29,8 @@ const config = {
     }),
     paths: {
       // YOUR github repository name
-      base: "/svelte-kit-github-page-example/",
-    },
-
-		// Override http methods in the Todo forms
-		methodOverride: {
-			allowed: ['PATCH', 'DELETE']
-		}
+      base: "/pixel-art-svelte",
+    }
 	}
 };
 
