@@ -32,7 +32,7 @@ const config = {
     }),
     paths: {
       // YOUR github repository name
-    //  base: "/pixel-art-svelte",
+    	base: process.env.NODE_ENV === 'production' ? '/pixel-art-svelte':'/'
     }
 	}
 };

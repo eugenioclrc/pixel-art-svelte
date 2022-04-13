@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	let cells = {}
 
 	const colors = [
@@ -27,25 +28,65 @@
 
 	let currentColor = [255,0,11];
 
-	function paint(cellId, e: MouseEvent) {
-		if((!e || e.buttons == 1 || e.buttons == 3) && cells[cellId] !== currentColor) {
-			cells[cellId] = currentColor;
+	function paint(cellId, e: MouseEvent | TouchEvent) {
+		const shouldPaint = e.type == 'touchmove' || (e && e.buttons && e.buttons == 1 || e.buttons == 3);
+		if(!shouldPaint || cells[cellId] === currentColor) {
+			return;
 		}
+
+		if(gun) {
+			const el = {}
+			el[cellId] = currentColor.join(',');
+			gun.get('pixelsCanvas_').put(el);
+		}
+		cells[cellId] = currentColor;
 	}
+
+	let gun;
+
+	onMount(() => {
+
+		gun = window.Gun(['https://gun-manhattan.herokuapp.com/gun']);
+		
+		gun.get('pixelsCanvas_').map().on((value, name) => {
+			try {
+				cells[name] = value.split(',').map(v => parseInt(v));
+			} catch(e) {
+				console.log(e);
+			}
+		})
+
+		/*
+ 		gun.get('pixels').map().on(function(color,cellid){
+			if (cellid && color && typeof color == 'string') {
+				console.log(cellid, color);
+			 	cells[cellid] = color.split(',');
+			}
+			//console.log({cellid, color})
+		});
+		*/
+
+  // copy = gun.get('test').get('paste');
+  // paste.oninput = () => { copy.put(paste.value) };
+  // copy.on((data) => { paste.value = data });
+	})
 
 </script>
 
 <svelte:head>
 	<title>Home</title>
+	<script src="https://cdn.jsdelivr.net/npm/gun/gun.js"></script>
 </svelte:head>
 
 <section>
-<div class="flex flex-col mb-10">
+<div class="flex flex-col mb-10 justify-center">
 	<div>PICK COLOR</div>
-	<div class="flex">
+	<div class="flex flex-wrap">
 		{#each colors as c}
-			<div class="block w-9 h-9" class:bg-slate-500={c} style="{c ? `background: rgb(${c[0]}, ${c[1]}, ${c[2]}` : ''})"
-			on:click={() => { currentColor = c}}>
+			<div class="flex w-9 h-9" class:bg-slate-500={c} style="{c ? `background: rgb(${c[0]}, ${c[1]}, ${c[2]}` : ''}"
+			on:click={() => { currentColor = c}}
+			on:touchstart={() => { currentColor = c}}
+			on:mousedown={() => { currentColor = c}}>
 			</div>
 		{/each}
 	</div>
@@ -56,11 +97,14 @@
     {#each Array(20) as _, j}
 			{@const cellId = `${i}-${j}`}
 			{@const cell = cells[cellId]}
-  		<div class="block bg-slate-500"
+  		<div class="cell bg-slate-500"
 			style="background: rgb({cell ? `${cell[0]}, ${cell[1]}, ${cell[2]}` : '100,116,139'})"
+		 on:mousedown={(e) => { paint(cellId, e) }}
 		 on:click={(e) => { paint(cellId, e) }}
-		 on:mouseenter={(e) => { paint(cellId, e); }}
-		 on:mouseleave={(e) => { paint(cellId, e); }}
+		 on:touchstart={(e) => { paint(cellId, e) }}
+		 on:touchmove={(e) => { paint(cellId, e) }}
+		 on:mouseenter={(e) => { paint(cellId, e) }}
+		 on:mouseleave={(e) => { paint(cellId, e) }}
 		 ></div>  
 		{/each}
 {/each}
@@ -78,6 +122,13 @@
 		grid-template-rows: repeat(20, 1fr);
 		grid-column-gap:1px;
 		grid-row-gap: 1px;
+    cursor: cell;
+    touch-action: none;
+	}
+
+	.cell {
+		cursor: cell;
+    touch-action: none;
 	}
 	section {
 		display: flex;
@@ -89,20 +140,5 @@
 
 	h1 {
 		width: 100%;
-	}
-
-	.welcome {
-		position: relative;
-		width: 100%;
-		height: 0;
-		padding: 0 0 calc(100% * 495 / 2048) 0;
-	}
-
-	.welcome img {
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		top: 0;
-		display: block;
 	}
 </style>
